@@ -59,6 +59,10 @@ class MLS:
         self.__serial = None
         self.__rx_thread = None
 
+    def set_sleep(self, sleep:bool=True):
+        #when using a bridge set DTR (?) and write
+        pass
+
     def __enter__(self):
         return self
 
