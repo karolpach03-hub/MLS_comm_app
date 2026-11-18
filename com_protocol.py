@@ -1,46 +1,47 @@
-from dataclasses import dataclass
+from enum import IntEnum
 
-START_BYTE:int	=0xA5
+START_BYTES:bytes	=b"\xaa\x55"
+FRAME_SIZE:int		=11
 
-@dataclass(frozen=True)
-class OPCODE:
-	READ_REQ:int	=0x00
-	READ_RESP:int	=0x01
-	WRITE_REQ:int	=0x02
-	WRITE_ACK:int	=0x03
-	WRITE_NACK:int	=0x04
+class OPCODE (IntEnum):
+	READ_REQ:int	=0xA0
+	READ_RESP:int	=0xA1
+	WRITE_REQ:int	=0xA2
+	WRITE_ACK:int	=0xA3
+	WRITE_NACK:int	=0xA4
+	INVALID:int		=0x00
 	NOP:int			=0xff
 
-@dataclass(frozen=True)
-class REGISTER:
-	COMMAND:int	=0x00
-	STATUS:int	=0x01
-	FREQ:int	=0x10
-	AMPL:int	=0x11
-	LLIM:int	=0x12
-	ULIM:int	=0x13
-	CENTER:int	=0x14
-	SCREW:int	=0x15
+class REGISTER (IntEnum):
+	COMMAND:int	=0xA0
+	STATUS:int	=0xA1
+	FREQ:int	=0xB0
+	AMPL:int	=0xB1
+	LLIM:int	=0xB2
+	ULIM:int	=0xB3
+	CENTER:int	=0xB4
+	SCREW:int	=0xB5
+	INVALID:int	=0x00
 	NOP:int		=0xff
 
-@dataclass(frozen=True)
-class COMMAND:
-	ESTOP:int			=0x0000
-	EESTOP:int			=0x0001
-	START_OSC:int		=0x0002
-	STOP_OSC:int		=0x0003
-	PICK_UP:int			=0x0004
-	PUT_DOWN:int		=0x0005
-	START_PROCEDURE:int	=0x0006
-	STOP_PROCEDURE:int	=0x0007
-	RESET:int			=0x0008
+class COMMAND (IntEnum):
+	ESTOP:int			=0xCAB0
+	EESTOP:int			=0xCAB1
+	START_OSC:int		=0xCAB2
+	STOP_OSC:int		=0xCAB3
+	PICK_UP:int			=0xCAB4
+	PUT_DOWN:int		=0xCAB5
+	START_PROCEDURE:int	=0xCAB6
+	STOP_PROCEDURE:int	=0xCAB7
+	RESET:int			=0xCAB8
+	INVALID:int			=0x0000
 	NOP:int				=0xffff
 
-@dataclass(frozen=True)
-class ERRCODE:
-	UNKNOWN:int				=0x0000
-	VAL_OUT_OF_RANGE:int	=0x0001
-	REG_READONLY:int		=0x0002
-	INVALID_CRC:int			=0x0003
+class ERRCODE (IntEnum):
+	UNKNOWN:int				=0xCA00
+	VAL_OUT_OF_RANGE:int	=0xCA01
+	REG_READONLY:int		=0xCA02
+	INVALID_CRC:int			=0xCA03
+	INVALID:int				=0x0000
 	NOP:int					=0xffff
 
